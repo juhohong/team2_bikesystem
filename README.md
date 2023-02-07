@@ -49,9 +49,15 @@
   
   
   . 적용 후 테스트 (gitpod 환경)
+  
+    각 마이크로 서비스의 기능에 대한 검증 및
+    pub/sub 를 통한 서비스 확인
+    gateway를 통한 서비스 확인
+    CQRS 확인 을 수행 
+  
     각 서비스의 포트는 다음과 같음
   
-     gatweay 8088
+     gateway 8088
      point결재시스템 8081
      예약시스템 8082
      point관리시스템 8083
@@ -81,6 +87,8 @@
            http localhost:8085/reservationDashboards
            * 예약시스템 마이크로서비스 종료 후 재확인
            http localhost:8085/reservationDashboards
+   4) gateway를 통한 시나리오 확인
+          http localhost:8088/managements → http localhost:8084/managements
           
   ...
   
