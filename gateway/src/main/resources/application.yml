@@ -1,0 +1,90 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: approval
+          uri: http://localhost:8081
+          predicates:
+            - Path=/approvals/**, 
+        - id: reservation
+          uri: http://localhost:8082
+          predicates:
+            - Path=/reservations/**, 
+        - id: point
+          uri: http://localhost:8083
+          predicates:
+            - Path=/points/**, 
+        - id: bikeMgmt
+          uri: http://localhost:8084
+          predicates:
+            - Path=/managements/**, 
+        - id: dashboard
+          uri: http://localhost:8085
+          predicates:
+            - Path=, /reservationDashboards/**
+        - id: frontend
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: approval
+          uri: http://approval:8080
+          predicates:
+            - Path=/approvals/**, 
+        - id: reservation
+          uri: http://reservation:8080
+          predicates:
+            - Path=/reservations/**, 
+        - id: point
+          uri: http://point:8080
+          predicates:
+            - Path=/points/**, 
+        - id: bikeMgmt
+          uri: http://bikeMgmt:8080
+          predicates:
+            - Path=/managements/**, 
+        - id: dashboard
+          uri: http://dashboard:8080
+          predicates:
+            - Path=, /reservationDashboards/**
+        - id: frontend
+          uri: http://frontend:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
