@@ -67,28 +67,50 @@
   ...
   
    1) 따릉이관리시스템에서 따릉이의 등록 
+   
       등록 : http localhost:8084/managements color="red" registeredDate="20230207"  
+      
       등록 후 확인 : http localhost:8084/managements 
+      
    2) point결재시스템에서 point 구매
+      
       결재 (userId 10번으로 Point 3000 결재)
+      
            http localhost:8081/approvals userId="10" price="3000" approveDate="20230207" 
+      
       결재 후 확인
-           http localhost:8081/approvals
+      
+            http localhost:8081/approvals
+      
       [pub/sub] point 시스템에 userId 10에 대한 Point 등록 확인
-           http localhost:8083/points/10
+      
+            http localhost:8083/points/10
+            
    3) 예약시스템에서 따릉이 예약
+
       예약 (userId 10번으로 bikeID 1번 예약)
-           http POST localhost:8082/reservations userId="10" bikeId="1" 
+
+            http POST localhost:8082/reservations userId="10" bikeId="1" 
+
       예약 확인
-           http localhost:8082/reservations
+           
+            http localhost:8082/reservations
+      
       [pub/sub] point 시스템에 userId 10의 Point 차감 확인     
-           http localhost:8083/points/10
+           
+            http localhost:8083/points/10
+      
       [CQRS] 예약DashBoard 에서 예약 현황 확인
+      
            http localhost:8085/reservationDashboards
+           
            * 예약시스템 마이크로서비스 종료 후 재확인
+           
            http localhost:8085/reservationDashboards
+   
    4) gateway를 통한 시나리오 확인
-          http localhost:8088/managements → http localhost:8084/managements
+   
+           http localhost:8088/managements → http localhost:8084/managements
           
   ...
   
