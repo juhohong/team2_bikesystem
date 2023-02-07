@@ -12,7 +12,19 @@
 ...
 
 
+## Event Storming 결과
+ . MSAEz 로 모델링한 이벤트스토밍 결과:
+  https://labs.msaez.io/#/storming/70d9e09c3c0a88189e6c4b72c6e2f61f
 
+ . Event 도출
+![image](https://user-images.githubusercontent.com/2344829/217235648-3a1157ed-2092-47e4-9f6a-9b391d7e2743.png)
+
+  따릉이의 구매
+  포인트의 구매
+  예약 - 포인트 사용
+  취소 - 포인트 복귀
+  반납
+  의 이벤트 
 
 # 
 
