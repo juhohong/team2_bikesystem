@@ -16,7 +16,9 @@
  . MSAEz 로 모델링한 이벤트스토밍 결과:
   https://labs.msaez.io/#/storming/70d9e09c3c0a88189e6c4b72c6e2f61f
 
+ 
  . Event 도출
+ 
 ![image](https://user-images.githubusercontent.com/2344829/217235648-3a1157ed-2092-47e4-9f6a-9b391d7e2743.png)
 
   따릉이의 구매
@@ -25,6 +27,66 @@
   취소 - 포인트 복귀
   반납
   의 이벤트 
+
+
+ . 완성된 모델
+ 
+ ![image](https://user-images.githubusercontent.com/2344829/217236216-a38c0155-8026-4a97-80a3-d5ea708bb64e.png)
+
+
+
+ . 완성된 모델에서 기능 검증
+ 
+  1) 따릉이의 등록
+  2) 포인트 결재 후 따릉이 예약
+
+![image](https://user-images.githubusercontent.com/2344829/217236947-a2da20c1-0906-42d0-b874-e100ac646940.png)
+
+  
+## 구현
+
+  . pub/sub를 통해 전달되는 내용을 policy에서 구현
+  
+  
+  . 적용 후 테스트 (gitpod 환경)
+    각 서비스의 포트는 다음과 같음
+  
+     gatweay 8088
+     point결재시스템 8081
+     예약시스템 8082
+     point관리시스템 8083
+     따릉이관리시스템 8084
+     예약DashBoard 8085
+  
+  ...
+  
+   1) 따릉이관리시스템에서 따릉이의 등록 
+      등록 : http localhost:8084/managements color="red" registeredDate="20230207"  
+      등록 후 확인 : http localhost:8084/managements 
+   2) point결재시스템에서 point 구매
+      결재 (userId 10번으로 Point 3000 결재)
+           http localhost:8081/approvals userId="10" price="3000" approveDate="20230207" 
+      결재 후 확인
+           http localhost:8081/approvals
+      [pub/sub] point 시스템에 userId 10에 대한 Point 등록 확인
+           http localhost:8083/points/10
+   3) 예약시스템에서 따릉이 예약
+      예약 (userId 10번으로 bikeID 1번 예약)
+           http POST localhost:8082/reservations userId="10" bikeId="1" 
+      예약 확인
+           http localhost:8082/reservations
+      [pub/sub] point 시스템에 userId 10의 Point 차감 확인     
+           http localhost:8083/points/10
+      [CQRS] 예약DashBoard 에서 예약 현황 확인
+           http localhost:8085/reservationDashboards
+           * 예약시스템 마이크로서비스 종료 후 재확인
+           http localhost:8085/reservationDashboards
+          
+  ...
+  
+## 
+  
+  
 
 # 
 
