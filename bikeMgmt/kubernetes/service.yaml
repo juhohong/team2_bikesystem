@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: bikeMgmt
+  name: bikemgmt
   labels:
-    app: bikeMgmt
+    app: bikemgmt
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: bikeMgmt
+    app: bikemgmt

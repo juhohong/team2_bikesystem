@@ -44,7 +44,7 @@ public class ReservationDashboardViewHandler {
         try {
             if (!canceled.validate()) return;
                 // view 객체 조회
-            Optional<ReservationDashboard> reservationDashboardOptional = reservationDashboardRepository.findByReserveNo(String.valueOf(canceled.getReserveNo()));
+            Optional<ReservationDashboard> reservationDashboardOptional = reservationDashboardRepository.findById(String.valueOf(canceled.getReserveNo()));
 
             if( reservationDashboardOptional.isPresent()) {
                  ReservationDashboard reservationDashboard = reservationDashboardOptional.get();
@@ -64,7 +64,7 @@ public class ReservationDashboardViewHandler {
         try {
             if (!bikeReturned.validate()) return;
                 // view 객체 조회
-            Optional<ReservationDashboard> reservationDashboardOptional = reservationDashboardRepository.findByReserveNo(String.valueOf(bikeReturned.getReserveNo()));
+            Optional<ReservationDashboard> reservationDashboardOptional = reservationDashboardRepository.findById(String.valueOf(bikeReturned.getReserveNo()));
 
             if( reservationDashboardOptional.isPresent()) {
                  ReservationDashboard reservationDashboard = reservationDashboardOptional.get();

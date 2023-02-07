@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: approval
-          image: username/approval:latest
+          image: agellid/approval:v2
           ports:
             - containerPort: 8080
           readinessProbe:

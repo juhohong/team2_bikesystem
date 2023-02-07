@@ -66,6 +66,11 @@ public class Reservation  {
 
 
 
+        
+
+    }
+    @PreUpdate
+    public void onPreUpdate(){
         BikeReturned bikeReturned = new BikeReturned(this);
         bikeReturned.publishAfterCommit();
 
@@ -73,10 +78,6 @@ public class Reservation  {
 
         Canceled canceled = new Canceled(this);
         canceled.publishAfterCommit();
-
-    }
-    @PreUpdate
-    public void onPreUpdate(){
     }
 
     public static ReservationRepository repository(){

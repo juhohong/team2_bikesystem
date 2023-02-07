@@ -18,11 +18,6 @@ public class Management  {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    
-    
-    
-    
-    
     private Integer bikeId;
     
     

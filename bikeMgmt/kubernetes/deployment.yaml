@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bikeMgmt
+  name: bikemgmt
   labels:
-    app: bikeMgmt
+    app: bikemgmt
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bikeMgmt
+      app: bikemgmt
   template:
     metadata:
       labels:
-        app: bikeMgmt
+        app: bikemgmt
     spec:
       containers:
-        - name: bikeMgmt
-          image: username/bikeMgmt:latest
+        - name: bikemgmt
+          image: agellid/bikemgmt:v1
           ports:
             - containerPort: 8080
           readinessProbe:

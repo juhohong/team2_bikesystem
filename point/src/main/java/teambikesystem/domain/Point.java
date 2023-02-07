@@ -19,12 +19,7 @@ public class Point  {
 
     
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    
-    
-    
-    
-    
+   // @GeneratedValue(strategy=GenerationType.AUTO)
     private Long userId;
     
     
@@ -58,9 +53,31 @@ public class Point  {
     }
 
 
-
-
     public static void pointTransfer(PointOrdered pointOrdered){
+
+        System.out.println("Pub/Sub Price ["+pointOrdered.getPrice()+"] ");
+        System.out.println("Pub/Sub UserId ["+pointOrdered.getUserId()+"]");
+        System.out.println("Insert");
+
+            repository().findById(Long.valueOf(pointOrdered.getUserId())).ifPresentOrElse(point->{
+            
+                point.setTotalPoint(point.getTotalPoint() + pointOrdered.getPrice()); 
+                repository().save(point);
+    
+                PointIncreased pointIncreased = new PointIncreased(point);
+                pointIncreased.publishAfterCommit();
+    
+            }            
+            ,()->{
+
+                Point point = new Point();
+                point.setUserId(Long.valueOf(pointOrdered.getUserId()));
+                point.setTotalPoint(pointOrdered.getPrice());
+                repository().save(point);
+            }
+            );
+       }  
+       
 
         /** Example 1:  new item 
         Point point = new Point();
@@ -81,11 +98,29 @@ public class Point  {
             pointIncreased.publishAfterCommit();
 
          });
-        */
+        */       
+    
+
+    public static void requestReturn(Canceled canceled){
+
+
+        // userId - point 1000 increase
 
         
-    }
-    public static void requestReturn(Canceled canceled){
+        repository().findById(Long.valueOf(canceled.getUserId())).ifPresent(point->{
+
+            point.setTotalPoint(point.getTotalPoint() + 1000); 
+            repository().save(point);
+    
+            PointIncreased pointIncreased = new PointIncreased(point);
+            pointIncreased.publishAfterCommit();
+         });
+
+
+
+
+
+
 
         /** Example 1:  new item 
         Point point = new Point();
@@ -107,10 +142,24 @@ public class Point  {
 
          });
         */
-
         
     }
+
     public static void usePoint(BikeReserved bikeReserved){
+
+        repository().findById(Long.valueOf(bikeReserved.getUserId())).ifPresent(point->{
+            
+            point.setTotalPoint(point.getTotalPoint() - 1000); 
+            repository().save(point);
+
+            PointUsed pointUsed = new PointUsed(point);
+            pointUsed.publishAfterCommit();
+
+         });
+
+
+
+
 
         /** Example 1:  new item 
         Point point = new Point();
@@ -135,6 +184,5 @@ public class Point  {
 
         
     }
-
 
 }
